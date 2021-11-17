@@ -5,6 +5,7 @@
 __pycache__
 db.sqlite3
 
+
 # celery
 celerybeat-schedule.*
 
@@ -18,3 +19,4 @@ env.bak/
 venv.bak/
 
 /mytestsite/movie/migrations/
+/movie/media_folder/

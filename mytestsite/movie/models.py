@@ -1,6 +1,12 @@
 from django.db import models
-
+import uuid
+import os
 # Create your models here.
+
+def custom_file_upload(instance, filename):
+    #return f"{str(uuid.uuid4())}/{filename}"
+    return os.path.join(str(uuid.uuid4(),filename))
+
 
 # Model przechowujący dane o filmie
 class Movie(models.Model):
@@ -18,6 +24,9 @@ class Movie(models.Model):
     imdb = models.DecimalField(max_digits=4, decimal_places=1, null=True, blank=True)
     mpaa_rating = models.CharField(choices=MPAA, max_length=10,
                                    verbose_name="MPAA", default='G')
+    trailer_video = models.URLField(null=True, blank=True, verbose_name="Trailer")
+    poster = models.ImageField(upload_to=custom_file_upload,  #"%Y%m%d",
+                               null=True, blank=True, verbose_name="Plakat")
 
     def save(self, *args, **kwargs):
         if self.released:
