@@ -4,4 +4,10 @@ from .models import *
 # Register your models here.
 
 # rejestracja modeli
-admin.site.register(Movie)
+#admin.site.register(Movie)
+
+@admin.register(Movie)
+class MovieAdmin(admin.ModelAdmin):
+    list_display = ("title", "year", "imdb")
+    list_filter = ("year",)
+    search_fields = ("title",)

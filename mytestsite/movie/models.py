@@ -4,10 +4,25 @@ from django.db import models
 
 # Model przechowujący dane o filmie
 class Movie(models.Model):
+
+    MPAA = (
+        ('-' , 'Brak'),
+        ('G' , 'Dla wszystkich'),
+        ('PG-13' , 'Za zgodą rodziców'),
+        ('NC-17' , 'Powyżej 17 roku życia'),
+    )
     title = models.CharField(max_length=255, verbose_name="Tytuł filmu")
     description = models.TextField(default="", verbose_name="Opis")
     released = models.DateField(verbose_name="Data premiery", null=True, blank=True)
+    year = models.IntegerField(editable=False, null=True, blank=True)
     imdb = models.DecimalField(max_digits=4, decimal_places=1, null=True, blank=True)
+    mpaa_rating = models.CharField(choices=MPAA, max_length=10,
+                                   verbose_name="MPAA", default='G')
+
+    def save(self, *args, **kwargs):
+        if self.released:
+            self.year = self.released.year
+        super(Movie, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.title}"
