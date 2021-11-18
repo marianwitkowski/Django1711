@@ -20,6 +20,9 @@ def request_details(request: HttpRequest):
 
 def show_now(request: HttpRequest):
     ctx = {
-        "current_ts" : datetime.now()
+        "current_ts" : datetime.now(),
+        "hour" : 19, # datetime.now().hour
+        "items": [], #["Ala","ma","kota"],
+        "total_item": 3
     }
     return render(request, "test.html", ctx )

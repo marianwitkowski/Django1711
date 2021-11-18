@@ -1,12 +1,50 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="{% static "css/main.css" %}">
 </head>
 <body>
+    {# komentarz #}
+
+    {% comment %}
+        To jest komentarz
+    {% endcomment %}
     <h1>
+        {% if hour >= 18 %}
+            Witaj wieczorem!<br/>
+        {% elif hour >= 12 %}
+            Witaj po południu!<br/>
+        {% else %}
+            Witaj do południa<br/>
+        {% endif %}
         Teraz jest: {{ current_ts }}
     </h1>
+
+    <br/>
+
+        {% if items|length > 0 %}
+            Elementy listy (ogółem: {{ items|length }} ):<br/>
+            <ul>
+                {% for el in items %}
+                    <li>{{ el }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            Brak danych
+        {% endif %}
+
+        <br/>
+            <ul>
+                {% for el in items %}
+                    <li>{{ el }}</li>
+                {% empty %}
+                    Brak danych
+                {% endfor %}
+            </ul>
+
 </body>
 </html>
