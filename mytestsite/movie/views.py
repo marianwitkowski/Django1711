@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http.request import HttpRequest
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, Http404
 # Create your views here.
 from datetime import datetime
 
 # import modeli
 from .models import *
+from .forms import MovieForm
 
 def hello_world(request : HttpRequest):
     s = "<h1>Hello world!!!</h1>"
@@ -44,7 +45,13 @@ def movieinfo_response(request, id):
     })
 
 def moviedel_response(request, id):
-    _movie = get_object_or_404(Movie, pk=id)
+    #_movie = get_object_or_404(Movie, pk=id)
+    _movie = None
+    try:
+        _movie = Movie.objects.get(pk=id)
+    except:
+        raise Http404("nie ma takiego filmu")
+
     if request.method == "POST":
         #usunąć obiekt
         _movie.delete()
@@ -52,3 +59,7 @@ def moviedel_response(request, id):
     return render(request, "movie-del.html", {
         "movie": _movie
     })
+
+def movieadd_response(request):
+    form = MovieForm()
+    return render(request, "movie-add.html", { "form" : form })
