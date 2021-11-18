@@ -16,3 +16,6 @@ class MovieAdmin(admin.ModelAdmin):
         if obj.author is None:
             obj.author = request.user
         obj.save()
+
+admin.site.register(Comment)
+admin.site.register(Actor)

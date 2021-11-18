@@ -26,6 +26,31 @@ custom_error_msg = {
     "required" : "To pole jest obowiązkowe",
 }
 
+class Actor(models.Model):
+    first_name = models.CharField(max_length=100, null=False)
+    last_name = models.CharField(max_length=100, null=False)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+    class Meta:
+        verbose_name = "Aktor"
+        verbose_name_plural = "Aktorzy"
+
+
+############ relacja one-2-many ########
+class Comment(models.Model):
+    body = models.TextField()
+    stars = models.IntegerField(default=3, validators=[MinValueValidator(1), MaxValueValidator(5)])
+    create_ts = models.DateTimeField(auto_now_add=True, editable=False)
+    movie = models.ForeignKey("Movie", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.stars} - {self.body[:30]}"
+
+    class Meta:
+        verbose_name = "komentarz"
+        verbose_name_plural = "komentarze"
+
 # Model przechowujący dane o filmie
 class Movie(models.Model):
 
@@ -53,6 +78,9 @@ class Movie(models.Model):
     update_ts_manual = models.DateTimeField(null=True, editable=False)
 
     author = models.ForeignKey(User, null=True, editable=False, on_delete=models.SET_NULL)
+
+    # relacja M2M z modelem Actor
+    actors = models.ManyToManyField(Actor, null=True, verbose_name="Aktorzy")
 
     def save(self, *args, **kwargs):
         if self.released:
