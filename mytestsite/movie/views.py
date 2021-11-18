@@ -4,6 +4,9 @@ from django.http.response import HttpResponse
 # Create your views here.
 from datetime import datetime
 
+# import modeli
+from .models import *
+
 def hello_world(request : HttpRequest):
     s = "<h1>Hello world!!!</h1>"
     return HttpResponse(s)
@@ -26,3 +29,9 @@ def show_now(request: HttpRequest):
         "total_item": 3
     }
     return render(request, "test.html", ctx )
+
+def movielist_response(request):
+    all_movies = Movie.objects.all().order_by("title")
+    return render(request, "movie-list.html", {
+        "movies" : all_movies
+    })

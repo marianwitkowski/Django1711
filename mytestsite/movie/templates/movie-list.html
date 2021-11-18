@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista filmów</title>
+    <link rel="stylesheet" href="{% static "css/main.css" %}">
+</head>
+<body>
+
+<h4>Lista filmów</h4>
+<table width="100%" border="1" cellpadding="10">
+    {% for movie in movies %}
+        <tr>
+            <td>{{ movie.title }}</td>
+            <td>{{ movie.released }}</td>
+            <td>{{ movie.imdb }}</td>
+            <td>{{ movie.mpaa_rating }}</td>
+        </tr>
+        <tr>
+            <td colspan="4">{{ movie.description }}</td>
+        </tr>
+        {% if movie.actors.all|length > 0 %}
+            <tr>
+                <td colspan="4">
+                    Aktorzy:
+                    <ul>
+                        {% for actor in movie.actors.all %}
+                            <li>{{ actor }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        {% endif %}
+        <tr>
+            <td colspan="4" style="height:1px; background: black;"></td>
+        </tr>
+
+    {% endfor %}
+</table>
+</body>
+</html>
