@@ -3,6 +3,9 @@ from django.core.validators import \
     MinValueValidator, MaxValueValidator, MinLengthValidator
 from django.core.exceptions import ValidationError
 
+from django.contrib.auth.models import User #  import klasy z dostępem do użytkowników
+
+from datetime import datetime
 import uuid
 import os
 # Create your models here.
@@ -45,10 +48,17 @@ class Movie(models.Model):
     trailer_video = models.URLField(null=True, blank=True, verbose_name="Trailer")
     poster = models.ImageField(upload_to=custom_file_upload,  #"%Y%m%d",
                                null=True, blank=True, verbose_name="Plakat")
+    create_ts = models.DateTimeField(auto_now_add=True, editable=False)
+    update_ts = models.DateTimeField(auto_now=True, editable=False)
+    update_ts_manual = models.DateTimeField(null=True, editable=False)
+
+    author = models.ForeignKey(User, null=True, editable=False, on_delete=models.SET_NULL)
 
     def save(self, *args, **kwargs):
         if self.released:
             self.year = self.released.year
+        if self.pk: # oznacza że jest już rekord, a jeśli None - to znaczy że dodajemy instancje obiektu
+            self.update_ts_manual = datetime.today()
         super(Movie, self).save(*args, **kwargs)
 
     def __str__(self):
