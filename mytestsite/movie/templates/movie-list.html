@@ -14,9 +14,9 @@
     {% for movie in movies %}
         <tr>
             <td>{{ movie.title }}</td>
-            <td>{{ movie.released }}</td>
-            <td>{{ movie.imdb }}</td>
-            <td>{{ movie.mpaa_rating }}</td>
+            <td>{{ movie.released|default_if_none:"BRAK INFO" }}</td>
+            <td>{{ movie.imdb|default_if_none:"BRAK OCENY" }}</td>
+            <td>{{ movie.get_mpaa_rating_display }}</td>
         </tr>
         <tr>
             <td colspan="4">{{ movie.description }}</td>
