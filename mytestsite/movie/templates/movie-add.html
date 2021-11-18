@@ -9,8 +9,14 @@
 <form method="post" enctype="multipart/form-data">
 
     <table>
+        {% csrf_token %}
     {{ form.as_table }}
-        </table>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Zapisz film</button>
+            </td>
+        </tr>
+    </table>
 
 </form>
 

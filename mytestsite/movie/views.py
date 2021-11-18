@@ -61,5 +61,5 @@ def moviedel_response(request, id):
     })
 
 def movieadd_response(request):
-    form = MovieForm()
+    form = MovieForm(request.POST, request.FILES)
     return render(request, "movie-add.html", { "form" : form })
