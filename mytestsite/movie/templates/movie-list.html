@@ -17,13 +17,18 @@
             <td>{{ movie.released|default_if_none:"BRAK INFO" }}</td>
             <td>{{ movie.imdb|default_if_none:"BRAK OCENY" }}</td>
             <td>{{ movie.get_mpaa_rating_display }}</td>
+            <td>
+                <a href="{% url 'movie_info' movie.id %}"> Szczegóły</a>
+                <a>Edytuj</a>
+                <a href="{% url 'movie_del' movie.id %}">Usuń</a>
+            </td>
         </tr>
         <tr>
-            <td colspan="4">{{ movie.description }}</td>
+            <td colspan="5">{{ movie.description }}</td>
         </tr>
         {% if movie.actors.all|length > 0 %}
             <tr>
-                <td colspan="4">
+                <td colspan="5">
                     Aktorzy:
                     <ul>
                         {% for actor in movie.actors.all %}
@@ -34,7 +39,7 @@
             </tr>
         {% endif %}
         <tr>
-            <td colspan="4" style="height:1px; background: black;"></td>
+            <td colspan="5" style="height:1px; background: black;"></td>
         </tr>
 
     {% endfor %}

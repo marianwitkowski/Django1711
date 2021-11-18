@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista filmów</title>
+    <link rel="stylesheet" href="{% static "css/main.css" %}">
+</head>
+<body>
+
+<h4>Szczegóły filmu</h4>
+
+<h5>{{ movie.title }}</h5>
+<h5>{{ movie.description }}</h5>
+
+        {% if comments|length > 0 %}
+                    Komentarze:
+                    <ul>
+                        {% for comment in comments.all %}
+                            <li>{{ comment.stars }} - {{ comment.body }}</li>
+                        {% endfor %}
+                    </ul>
+        {% else %}
+            Komentarzy brak
+        {% endif %}
+
+
+
+</table>
+</body>
+</html>

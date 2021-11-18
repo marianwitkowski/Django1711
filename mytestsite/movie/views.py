@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 # Create your views here.
@@ -34,4 +34,21 @@ def movielist_response(request):
     all_movies = Movie.objects.all().order_by("title")
     return render(request, "movie-list.html", {
         "movies" : all_movies
+    })
+
+def movieinfo_response(request, id):
+    _movie = get_object_or_404(Movie, pk=id)
+    _comments = Comment.objects.filter(movie=_movie)
+    return render(request, "movie-info.html", {
+        "movie" : _movie, "comments" : _comments
+    })
+
+def moviedel_response(request, id):
+    _movie = get_object_or_404(Movie, pk=id)
+    if request.method == "POST":
+        #usunąć obiekt
+        _movie.delete()
+        return redirect(movielist_response)
+    return render(request, "movie-del.html", {
+        "movie": _movie
     })
