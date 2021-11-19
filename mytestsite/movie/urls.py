@@ -18,5 +18,6 @@ urlpatterns = [
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
     path("logout-done", logout_done),
 
-    path("signup", signup_reponse)
+    path("signup", signup_reponse),
+    path("form", form_response)
 ]

@@ -91,6 +91,31 @@ def movieedit_response(request, id):
 def logout_done(request):
     return render(request, "logout-done.html")
 
+import hashlib
 def signup_reponse(request):
-    form = SignupForm()
+    if request.method == "POST":
+        form = SignupForm(request.POST)
+        result = form.is_valid()
+        if result:
+            cu = CustomUser()
+            cu.first_name = form["first_name"].value()
+            cu.last_name = form["last_name"].value()
+            cu.email = form["email"].value()
+            cu.age = form["age"].value()
+            s = hashlib.md5(form["password1"].value().encode("utf-8")). hexdigest()
+            cu.password = s
+            cu.save()
+    else:
+        form = SignupForm()
     return render(request, "signup.html", {"form":form})
+
+def form_response(request : HttpRequest):
+    if request.method == "POST":
+        #obsługa formularza
+        fn = request.POST.get("fullname")
+        age = request.POST.get("age")
+        # walidacja danych z formularza
+        if age < 0:
+            pass
+        # zapis
+    return render(request, "form.html")

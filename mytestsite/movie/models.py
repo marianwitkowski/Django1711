@@ -107,3 +107,14 @@ def title_upper(sender, instance, **kwargs):
 @receiver(signals.post_save, sender=Movie)
 def after_movie_save(sender, instance, created, **kwargs):
     print(created)
+
+#######
+class CustomUser(models.Model):
+    first_name = models.CharField(max_length=100, null=False)
+    last_name = models.CharField(max_length=100, null=False)
+    email = models.CharField(max_length=100, null=False)
+    age = models.IntegerField(null=False)
+    password = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"

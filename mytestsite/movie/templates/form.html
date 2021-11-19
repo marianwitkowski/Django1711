@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form method="post">
+     {% csrf_token %}
+    Imię: <input type="text" name="fullname"><br/>
+    Wiek: <input type="text" name="age">
+    <button type="submit">Prześlij</button>
+</form>
+
+</body>
+</html>
