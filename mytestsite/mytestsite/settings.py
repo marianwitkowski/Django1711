@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(env('DEBUG'))==1
+DEBUG = env('DEBUG')=="1"
 
 ALLOWED_HOSTS = ["*"]
 
@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+#    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -111,10 +112,16 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 LANGUAGE_CODE = 'en'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Warsaw'
 USE_I18N = True
 USE_L10N = True
-USE_TZ = True
+USE_TZ = False
+
+LANGUAGES = (
+    ('en','English'),
+    ('pl','Polish'),
+    ('de','Germany')
+)
 
 
 # Static files (CSS, JavaScript, Images)

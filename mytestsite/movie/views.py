@@ -3,6 +3,7 @@ from django.http.request import HttpRequest
 from django.http.response import HttpResponse, Http404
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.utils.translation import ugettext as _
 
 # Create your views here.
 from datetime import datetime
@@ -12,8 +13,18 @@ from .models import *
 # import formularzy
 from .forms import MovieForm, SignupForm
 
+from django.utils import translation
+
+def changelang_response(request: HttpRequest):
+    user_lng = request.GET.get("l")
+    translation.activate(user_lng)
+    response = HttpResponse("OK")
+    response.set_cookie(settings.LANGUAGE_COOKIE_NAME, user_lng)
+    return redirect("/hello")
+
 def hello_world(request : HttpRequest):
-    s = "<h1>Hello world!!!</h1>"
+    txt = _('WelcomeHeading')
+    s = f"<h1>{txt}</h1>"
     return HttpResponse(s)
 
 def request_details(request: HttpRequest):

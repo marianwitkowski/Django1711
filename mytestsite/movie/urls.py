@@ -19,5 +19,8 @@ urlpatterns = [
     path("logout-done", logout_done),
 
     path("signup", signup_reponse),
-    path("form", form_response)
+    path("form", form_response),
+
+    path("lang", changelang_response)
+
 ]
