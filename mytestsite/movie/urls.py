@@ -21,6 +21,7 @@ urlpatterns = [
     path("signup", signup_reponse),
     path("form", form_response),
 
-    path("lang", changelang_response)
+    path("lang", changelang_response),
 
+    path("celery-test", celerytest_response)
 ]

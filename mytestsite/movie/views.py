@@ -130,3 +130,8 @@ def form_response(request : HttpRequest):
             pass
         # zapis
     return render(request, "form.html")
+
+from .tasks import task_send_email
+def celerytest_response(request):
+    token = task_send_email.delay()
+    return HttpResponse(token)
