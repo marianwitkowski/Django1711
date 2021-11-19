@@ -9,7 +9,8 @@ from datetime import datetime
 
 # import modeli
 from .models import *
-from .forms import MovieForm
+# import formularzy
+from .forms import MovieForm, SignupForm
 
 def hello_world(request : HttpRequest):
     s = "<h1>Hello world!!!</h1>"
@@ -89,3 +90,7 @@ def movieedit_response(request, id):
 
 def logout_done(request):
     return render(request, "logout-done.html")
+
+def signup_reponse(request):
+    form = SignupForm()
+    return render(request, "signup.html", {"form":form})
