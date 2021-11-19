@@ -23,5 +23,6 @@ urlpatterns = [
 
     path("lang", changelang_response),
 
-    path("celery-test", celerytest_response)
+    path("celery-test", celerytest_response),
+    path("get-task/<str:token>", gettask_response)
 ]

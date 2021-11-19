@@ -131,7 +131,18 @@ def form_response(request : HttpRequest):
         # zapis
     return render(request, "form.html")
 
-from .tasks import task_send_email
+from .tasks import task_send_email, long_task
 def celerytest_response(request):
-    token = task_send_email.delay()
+    token = long_task.delay()
     return HttpResponse(token)
+
+
+import json
+from celery.result import AsyncResult
+def gettask_response(request, token):
+    result = AsyncResult(token)
+    response_data = {
+        "state" : result.state,
+        "details": result.info
+    }
+    return HttpResponse(json.dumps(response_data), content_type="application/json")
