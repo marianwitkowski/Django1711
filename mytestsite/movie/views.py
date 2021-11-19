@@ -60,6 +60,24 @@ def moviedel_response(request, id):
         "movie": _movie
     })
 
-def movieadd_response(request):
-    form = MovieForm(request.POST, request.FILES)
+from django.conf import settings
+
+def movieadd_response(request : HttpRequest):
+    if not request.user.is_authenticated:
+        return redirect(f"/admin?next={request.path}")
+
+    form = MovieForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        movie = form.save(commit=True)
+        movie.author = request.user
+        movie.save()
+        return redirect(movielist_response)
     return render(request, "movie-add.html", { "form" : form })
+
+def movieedit_response(request, id):
+    _movie = get_object_or_404(Movie, pk=id)
+    form = MovieForm(request.POST or None, request.FILES or None, instance=_movie)
+    if form.is_valid():
+        form.save(commit=True)
+        return redirect(movielist_response)
+    return render(request, "movie-add.html", { "form" : form, "edit" : True })

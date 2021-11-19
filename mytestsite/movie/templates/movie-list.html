@@ -10,6 +10,9 @@
 <body>
 
 <h4>Lista filmów</h4>
+<p>
+    <a href="{% url 'movie_add' %}">Dodaj nowy film</a>
+</p>
 <table width="100%" border="1" cellpadding="10">
     {% for movie in movies %}
         <tr>
@@ -19,7 +22,7 @@
             <td>{{ movie.get_mpaa_rating_display }}</td>
             <td>
                 <a href="{% url 'movie_info' movie.id %}"> Szczegóły</a>
-                <a>Edytuj</a>
+                <a href="{% url 'movie_edit' movie.id %}">Edytuj</a>
                 <a href="{% url 'movie_del' movie.id %}">Usuń</a>
             </td>
         </tr>

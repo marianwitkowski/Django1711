@@ -13,12 +13,22 @@
     {{ form.as_table }}
         <tr>
             <td colspan="2">
-                <button type="submit">Zapisz film</button>
+                <button type="submit">
+                    {% if edit %}
+                        Zapisz film
+                    {% else %}
+                        Dodaj film
+                    {% endif %}
+                </button>
             </td>
         </tr>
     </table>
 
 </form>
+
+<p>
+    <a href="{% url 'movie_list' %}">Lista filmów</a>
+</p>
 
 </body>
 </html>
