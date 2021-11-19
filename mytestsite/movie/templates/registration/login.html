@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Strona logowania</title>
+    <link rel="stylesheet" href="{% static "css/main.css" %}">
+</head>
+<body>
+<form method="post">
+    <table>
+        {% csrf_token %}
+        {{ form }}
+    </table>
+    <button type="submit">Zaloguj się</button>
+</form>
+</body>
+</html>

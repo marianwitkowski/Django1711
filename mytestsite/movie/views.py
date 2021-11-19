@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse, Http404
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 from datetime import datetime
 
@@ -44,6 +47,7 @@ def movieinfo_response(request, id):
         "movie" : _movie, "comments" : _comments
     })
 
+@login_required()
 def moviedel_response(request, id):
     #_movie = get_object_or_404(Movie, pk=id)
     _movie = None
@@ -60,11 +64,11 @@ def moviedel_response(request, id):
         "movie": _movie
     })
 
-from django.conf import settings
 
+@login_required()
 def movieadd_response(request : HttpRequest):
-    if not request.user.is_authenticated:
-        return redirect(f"/admin?next={request.path}")
+    # if not request.user.is_authenticated:
+    #     return redirect(f"/admin/login?next=/movieadd/")
 
     form = MovieForm(request.POST or None, request.FILES or None)
     if form.is_valid():
@@ -74,6 +78,7 @@ def movieadd_response(request : HttpRequest):
         return redirect(movielist_response)
     return render(request, "movie-add.html", { "form" : form })
 
+@login_required()
 def movieedit_response(request, id):
     _movie = get_object_or_404(Movie, pk=id)
     form = MovieForm(request.POST or None, request.FILES or None, instance=_movie)
@@ -81,3 +86,6 @@ def movieedit_response(request, id):
         form.save(commit=True)
         return redirect(movielist_response)
     return render(request, "movie-add.html", { "form" : form, "edit" : True })
+
+def logout_done(request):
+    return render(request, "logout-done.html")

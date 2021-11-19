@@ -125,3 +125,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # konfiguracja dla uploadu plików
 MEDIA_URL = "/media/"
 MEDIA_ROOT = "movie/media_folder"
+
+LOGIN_URL = "/login"
+LOGIN_REDIRECT_URL = "movie_list"
+LOGOUT_REDIRECT_URL = "/logout-done"
